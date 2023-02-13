@@ -1,23 +1,23 @@
 {
-  "name": "vite-react",
+  "name": "autoODE",
   "version": "1.0.0",
   "author": {
-    "name": "云深",
-    "email": "yuns.xie@qq.com"
+    "name": "Yizheng Huang",
+    "email": "huangyz0918@gmail.com"
   },
   "scripts": {
+    "build": "vite build",
     "dev": "cross-env BROWSER=chrome vite --host",
     "dev:force": "npm run dev -- --force",
-    "build": "vite build",
-    "serve": "vite preview --host",
-    "start": "npm run dev",
     "lint": "npm run lint:js && tsc",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
-    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "prepare": "husky install",
     "prettier": "prettier --check --write \"src/**/*\"",
-    "prepare": "husky install"
+    "serve": "vite preview --host",
+    "start": "npm run dev"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
@@ -30,12 +30,9 @@
     "last 2 versions",
     "not ie <= 10"
   ],
-  "engines": {
-    "node": ">=12.2.0"
-  },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@ant-design/pro-layout": "^6.16.1",
+    "@ant-design/pro-layout": "^7.1.9",
     "@vitjs/runtime": "^0.9.2",
     "ahooks": "^2.10.0",
     "antd": "^4.14.0",
@@ -70,5 +67,8 @@
     "vite-plugin-windicss": "^1.8.3",
     "vite-tsconfig-paths": "^2.3.0",
     "windicss": "^3.5.1"
+  },
+  "engines": {
+    "node": ">=12.2.0"
   }
 }
