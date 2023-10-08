@@ -1,6 +1,14 @@
+import enum
 from pydantic import BaseModel
-
 from typing import List, Optional
+
+
+class BillStatus(enum.Enum):
+    """
+    BillStatus: represents the status of a bill.
+    """
+    CLEAR = 'clear'
+    PENDING = 'pending'
 
 
 class Group(BaseModel):
@@ -12,6 +20,7 @@ class Group(BaseModel):
     description: str
     ownerID: str
     memberIDs: List[str]
+    billIDs: List[str]
 
 
 class User(BaseModel):
@@ -33,3 +42,7 @@ class Bill(BaseModel):
     ownerID: str
     payerIDs: List[str]
     price: float
+    status: Optional[BillStatus]
+
+    class Config:
+        use_enum_values = True

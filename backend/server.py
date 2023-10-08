@@ -1,11 +1,22 @@
 from typing import List
 
 from fastapi import FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 
 from backend.database import DBHandler
-from backend.model import Bill, User, Group
+from backend.model import BillStatus, Bill, User, Group
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 db_handler = DBHandler()
 
 
@@ -150,9 +161,14 @@ async def update_group(group_id: str, group: Group):
     :param group: the group.
     :return: the updated group.
     """
-    group_resp = db_handler.update_group(group_id, group)
-    if not group_resp:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Group {group_id} not found.")
+    try:
+        group_resp = db_handler.update_group(group_id, group)
+        if not group_resp:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Group {group_id} not found.")
+
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
     return group
 
 
@@ -167,14 +183,15 @@ async def get_group_bills(group_id: str):
 
 
 @app.get("/bill/user/{user_id}", response_model=List[Bill])
-async def get_user_bills(user_id: str, owner: bool = False):
+async def get_user_bills(user_id: str, owner: bool = False, bill_status: BillStatus = None):
     """
     get_user_bill: get the user bill.
     :param user_id: get the user id.
     :param owner: whether the user is the owner.
+    :param bill_status: the bill status.
     :return: the user bill.
     """
-    all_bills = db_handler.get_all_bills()
+    all_bills = db_handler.get_all_bills(status=bill_status)
 
     if owner:
         return [bill for bill in all_bills if bill.ownerID == user_id]
@@ -193,12 +210,13 @@ async def get_bill(bill_id: str):
 
 
 @app.get("/bill", response_model=List[Bill])
-async def get_all_bills():
+async def get_all_bills(bill_status: str = None):
     """
     get_all_bills: get all the bills.
+    :param bill_status: the bill status.
     :return: all the bills.
     """
-    return db_handler.get_all_bills()
+    return db_handler.get_all_bills(status=bill_status)
 
 
 @app.post("/bill", response_model=Bill, status_code=status.HTTP_201_CREATED)

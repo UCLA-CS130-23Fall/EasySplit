@@ -1,6 +1,7 @@
 from tinydb import Query
 from typing import List, Union
 
+from backend.model import BillStatus
 from backend.model import Bill, User, Group
 from backend.utils import initialize_db, initialize_id
 
@@ -47,6 +48,18 @@ class DBHandler:
             return None
         else:
             updated_group.groupID = original_group.groupID
+
+            # the ownerID should be existed in the user table
+            existing_user = self.db_users.search(Query().userID == updated_group.ownerID)
+            if not existing_user:
+                raise ValueError(f"Owner {updated_group.ownerID} does not exist.")
+
+            # the memberIDs should be existed in the user table
+            for member in updated_group.memberIDs:
+                existing_user = self.db_users.search(Query().userID == member)
+                if not existing_user:
+                    raise ValueError(f"Member {member} does not exist.")
+
             group_query = Query()
             self.db_groups.update(updated_group.dict(), group_query.groupID == group_id)
             return updated_group
@@ -195,12 +208,16 @@ class DBHandler:
         """
         return [User(**item) for item in self.db_users.all()]
 
-    def get_all_bills(self) -> List[Bill]:
+    def get_all_bills(self, status: BillStatus = None) -> List[Bill]:
         """
         get_all_bills: get all bills.
+        :param status: the bill status.
         :return: the bills.
         """
-        return [Bill(**item) for item in self.db_bills.all()]
+        if status:
+            return [bill for bill in self.get_all_bills() if bill.status == status]
+        else:
+            return [Bill(**item) for item in self.db_bills.all()]
 
     def get_bill_by_group(self, group_id: str) -> List[Bill]:
         """
