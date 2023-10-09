@@ -1,5 +1,5 @@
 from typing import List
-
+from datetime import datetime
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -138,7 +138,9 @@ async def create_group(group: Group):
         if member not in [existing_user.userID for existing_user in all_users]:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Member {member} does not exist.")
 
+    group.createDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     db_handler.create_group(group)
+
     return group
 
 
@@ -227,6 +229,9 @@ async def create_bill(bill: Bill):
     :return: the created bill.
     """
     try:
+        bill.createDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if bill.status == BillStatus.CLEAR.value:
+            bill.completeDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         db_handler.create_bill(bill)
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
@@ -242,10 +247,38 @@ async def update_bill(bill_id: str, bill: Bill):
     :param bill: the bill.
     :return: the updated bill.
     """
+    original_bill = db_handler.get_bill(bill_id)
     bill_resp = db_handler.update_bill(bill_id, bill)
+
+    if bill.status != original_bill.status:
+        if bill.status == BillStatus.CLEAR.value:
+            bill.completeDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        elif bill.status == BillStatus.PENDING.value:
+            bill.completeDate = None
+        else:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid bill status {bill.status}.")
     if not bill_resp:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Bill {bill_id} not found.")
+
     return bill
+
+
+@app.put("/bill/{bill_id}/clear")
+async def clear_bill(bill_id: str):
+    """
+    clear_bill: clear the bill.
+    :param bill_id: the bill id.
+    :return: the updated bill.
+    """
+    original_bill = db_handler.get_bill(bill_id)
+    original_bill.status = BillStatus.CLEAR.value
+    original_bill.completeDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    bill_resp = db_handler.update_bill(bill_id=bill_id, updated_bill=original_bill)
+
+    if not bill_resp:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Bill {bill_id} not found.")
+
+    return bill_id
 
 
 @app.delete("/bill/{bill_id}")

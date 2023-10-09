@@ -7,8 +7,8 @@ class BillStatus(enum.Enum):
     """
     BillStatus: represents the status of a bill.
     """
-    CLEAR = 'clear'
-    PENDING = 'pending'
+    CLEAR = "clear"
+    PENDING = "pending"
 
 
 class Group(BaseModel):
@@ -21,6 +21,7 @@ class Group(BaseModel):
     ownerID: str
     memberIDs: List[str]
     billIDs: List[str]
+    createDate: Optional[str]
 
 
 class User(BaseModel):
@@ -37,12 +38,17 @@ class Bill(BaseModel):
     """
     BillItem: represents a bill item.
     """
+    name: str
     groupID: str
     billID: Optional[str]
     ownerID: str
+    ownerName: Optional[str]
     payerIDs: List[str]
+    payerNames: Optional[List[str]]
     price: float
     status: Optional[BillStatus]
+    createDate: Optional[str]
+    completeDate: Optional[str]
 
     class Config:
         use_enum_values = True

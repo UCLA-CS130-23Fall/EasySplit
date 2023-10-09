@@ -129,7 +129,6 @@ class DBHandler:
         :return: the new bill.
         """
         bill.billID = initialize_id()
-        self.db_bills.insert(bill.dict())
 
         # the groupID should be existed in the group table
         existing_group = self.db_groups.search(Query().groupID == bill.groupID)
@@ -137,16 +136,20 @@ class DBHandler:
             raise ValueError(f"Group {bill.groupID} does not exist.")
 
         # the ownerID should be existed in the user table
-        existing_user = self.db_users.search(Query().userID == bill.ownerID)
-        if not existing_user:
+        existing_owner = self.db_users.search(Query().userID == bill.ownerID)
+        bill.ownerName = existing_owner[0]['username'] if existing_owner else None
+        if not existing_owner:
             raise ValueError(f"Owner {bill.ownerID} does not exist.")
 
         # the payerIDs should be existed in the user table
+        bill.payerNames = []
         for payer in bill.payerIDs:
-            existing_user = self.db_users.search(Query().userID == payer)
-            if not existing_user:
+            existing_payer = self.db_users.search(Query().userID == payer)
+            bill.payerNames.append(existing_payer[0]['username']) if existing_payer else None
+            if not existing_payer:
                 raise ValueError(f"Payer {payer} does not exist.")
 
+        self.db_bills.insert(bill.dict())
         return bill
 
     def get_bill(self, bill_id: str) -> Union[Bill, None]:
