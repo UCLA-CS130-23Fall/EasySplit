@@ -1,0 +1,41 @@
+name: Static Checks
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Ensure we have the full git history by setting fetch-depth to 0 (required for link checks)
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # or another LTS/Boron version
+
+      # Install your project dependencies
+      - name: Install dependencies
+        run: |
+          cd EasySplit/app
+          npm install -g pnpm
+          pnpm install
+
+      - name: Lint
+        run: |
+          cd EasySplit/app
+          pnpm run lint
+
+      # Conduct TypeScript type checks
+      - name: Type checks
+        run: |
+          cd EasySplit/app
+          pnpm run type:check
+
+      # Conduct style checks using Prettier
+      - name: Prettier style check
+        run: |
+          cd EasySplit/app
+          pnpm run format:check

@@ -6,7 +6,7 @@ import "./index.css";
 
 function HomePage() {
   const [userData, setUserData] = useState<{ value: string; label: string }[]>(
-    []
+    [],
   );
 
   const [groupData, setGroupData] = useState<
@@ -25,7 +25,7 @@ function HomePage() {
 
   const filterOption = (
     input: string,
-    option?: { label: string; value: string }
+    option?: { label: string; value: string },
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   useEffect(() => {
