@@ -6,10 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # Ensure we have the full git history by setting fetch-depth to 0 (required for link checks)
-          fetch-depth: 0
+          sparse-checkout: "app/"
+          sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
