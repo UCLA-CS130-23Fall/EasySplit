@@ -20,23 +20,19 @@ jobs:
       # Install your project dependencies
       - name: Install dependencies
         run: |
-          cd EasySplit/app
           npm install -g pnpm
           pnpm install
 
       - name: Lint
         run: |
-          cd EasySplit/app
           pnpm run lint
 
       # Conduct TypeScript type checks
       - name: Type checks
         run: |
-          cd EasySplit/app
           pnpm run type:check
 
       # Conduct style checks using Prettier
       - name: Prettier style check
         run: |
-          cd EasySplit/app
           pnpm run format:check
