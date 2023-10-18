@@ -5,7 +5,7 @@ interface GroupType {
   ownerID: string;
   memberIDs: string[];
   billIDs: string[];
-  createDate?: string;  // ISO string format for date
+  createDate?: string; // ISO string format for date
 }
 
 export default GroupType;
