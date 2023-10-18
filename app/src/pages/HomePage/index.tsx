@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Select } from "antd";
 import request from "umi-request";
 import { useNavigate } from "react-router-dom";
+import GroupType from "../../types/group";
+import UserType from "../../types/user";
 import "./index.css";
 
 function HomePage() {
   const [userData, setUserData] = useState<{ value: string; label: string }[]>(
-    [],
+    []
   );
 
   const [groupData, setGroupData] = useState<
@@ -25,7 +27,7 @@ function HomePage() {
 
   const filterOption = (
     input: string,
-    option?: { label: string; value: string },
+    option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   useEffect(() => {
@@ -33,7 +35,7 @@ function HomePage() {
       try {
         // fetch user data
         const userResponse = await request("http://0.0.0.0:8000/user");
-        const formattedUserData = userResponse.map((user: any) => ({
+        const formattedUserData = userResponse.map((user: UserType) => ({
           value: user.userID,
           label: user.username,
         }));
@@ -41,7 +43,7 @@ function HomePage() {
 
         // featch group data
         const response = await request("http://0.0.0.0:8000/group");
-        const formattedGroupData = response.map((group: any) => ({
+        const formattedGroupData = response.map((group: GroupType) => ({
           value: group.groupID,
           label: group.name,
         }));

@@ -7,8 +7,6 @@ import { apiEndpoint } from "../../service/service";
 import { List, Button, Input, Space } from "antd";
 import "./index.css";
 
-const { Search } = Input;
-
 interface Params {
   id: string;
 }
@@ -51,7 +49,7 @@ export default function GroupPage() {
       }
     };
     fetchData();
-  }, []);
+  });
 
   return (
     <div style={{ margin: "2.5rem" }}>
@@ -72,7 +70,7 @@ export default function GroupPage() {
         style={{ width: "100%", marginTop: "2.5rem" }}
         itemLayout="horizontal"
         dataSource={billData}
-        renderItem={(item, _) => (
+        renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
               style={{ textAlign: "left", paddingLeft: "20px" }}
