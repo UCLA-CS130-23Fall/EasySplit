@@ -7,10 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          # Ensure we have the full git history by setting fetch-depth to 0 (required for link checks)
-          sparse-checkout: "app/"
-          sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -19,20 +15,24 @@ jobs:
 
       # Install your project dependencies
       - name: Install dependencies
+        working-directory: ./app
         run: |
           npm install -g pnpm
           pnpm install
 
       - name: Lint
+        working-directory: ./app
         run: |
           pnpm run lint
 
       # Conduct TypeScript type checks
       - name: Type checks
+        working-directory: ./app
         run: |
           pnpm run type:check
 
       # Conduct style checks using Prettier
       - name: Prettier style check
+        working-directory: ./app
         run: |
           pnpm run format:check
