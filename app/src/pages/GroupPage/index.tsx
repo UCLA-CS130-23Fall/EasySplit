@@ -9,6 +9,7 @@ import "./index.css";
 
 interface Params {
   id: string;
+  [key: string]: string | undefined; // Index signature
 }
 
 export default function GroupPage() {

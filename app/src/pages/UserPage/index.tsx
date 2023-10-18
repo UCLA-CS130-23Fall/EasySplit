@@ -4,6 +4,7 @@ import "./index.css";
 
 interface Params {
   id: string;
+  [key: string]: string | undefined; // Index signature
 }
 
 const UserPage: React.FC = () => {
