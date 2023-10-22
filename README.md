@@ -6,6 +6,35 @@
 
 This repo serves as a template for a repository that follows the Scrum process. The following information describes how the native features/workflows of Github can be customized to work in a scrum development process.
 
+### Documentation
+1. Create and activate an virtual enviroment with python 3.10
+```
+conda create --name easysplit python=3.10
+conda activate easysplit
+```
+
+2. Install dependencies 
+```
+pip install fastapi
+pip install "uvicorn[standard]"
+pip install tinydb
+```
+export PYTHONPATH=$PYTHONPATH:{place pwd here}
+3. Install [nodejs](https://nodejs.org/en/download)
+4.  It may be useful to download postman and 
+3. To start the backend
+`cd backend` 
+`python server.py`
+4. To start the frountend
+10. cd app
+11. npm install 
+12. npm run dev
+
+
+
+
+backend cd and unit tests
+
 ## Issues
 
 An issue is a unit of tracking work. Issues can be classified into different classes using `labels`. This can be used to classify issues in the scrum process as follows.
