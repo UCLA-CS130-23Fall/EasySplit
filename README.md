@@ -18,17 +18,24 @@ conda activate easysplit
 pip install fastapi
 pip install "uvicorn[standard]"
 pip install tinydb
-```
 export PYTHONPATH=$PYTHONPATH:{place pwd here}
-3. Install [nodejs](https://nodejs.org/en/download)
-4.  It may be useful to download postman and 
-3. To start the backend
-`cd backend` 
-`python server.py`
-4. To start the frountend
-10. cd app
-11. npm install 
-12. npm run dev
+```
+Install [nodejs](https://nodejs.org/en/download) and related packages
+```npm install ```
+It may be useful to download [postman](https://www.postman.com/home), which makes building and using APIs easier.
+
+5. To start the backend
+```
+cd backend 
+python server.py
+```
+
+6. To start the frountend
+```
+cd app
+npm run dev
+```
+
 
 
 
