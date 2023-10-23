@@ -36,12 +36,6 @@ cd app
 npm run dev
 ```
 
-
-
-
-
-backend cd and unit tests
-
 ## Issues
 
 An issue is a unit of tracking work. Issues can be classified into different classes using `labels`. This can be used to classify issues in the scrum process as follows.
