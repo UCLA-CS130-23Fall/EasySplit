@@ -20,9 +20,10 @@ pip install "uvicorn[standard]"
 pip install tinydb
 export PYTHONPATH=$PYTHONPATH:{place pwd here}
 ```
-Install [nodejs](https://nodejs.org/en/download) and related packages
+3. Install [nodejs](https://nodejs.org/en/download) and related packages
 ```npm install ```
-It may be useful to download [postman](https://www.postman.com/home), which makes building and using APIs easier.
+
+4. It may be useful to download [postman](https://www.postman.com/home), which makes building and using APIs easier.
 
 5. To start the backend
 ```
