@@ -5,13 +5,13 @@ import Group from "./pages/GroupPage";
 import Login from "./pages/LoginPage";
 
 const App: React.FC = () => (
-	<BrowserRouter>
-		<Routes>
-			<Route path="/" element={<Login />} />
-			<Route path="user/:id" element={<User />} />
-			<Route path="group/:id" element={<Group />} />
-		</Routes>
-	</BrowserRouter>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="user/:id" element={<User />} />
+      <Route path="group/:id" element={<Group />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 export default App;

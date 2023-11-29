@@ -1,19 +1,19 @@
 #parent {
-  text-align:center;
-  height:500px;
-  width:1000px;
+  text-align: center;
+  height: 500px;
+  width: 1000px;
 }
 .block {
-  height:300px;
-  width:500px;
-  text-align:left;
+  height: 300px;
+  width: 500px;
+  text-align: left;
 }
 .center {
-  margin:auto;
+  margin: auto;
 }
 .left {
-  margin:auto auto auto 0;
+  margin: auto auto auto 0;
 }
 .right {
-  margin:auto 0 auto auto;
+  margin: auto 0 auto auto;
 }
