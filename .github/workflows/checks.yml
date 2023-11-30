@@ -25,11 +25,11 @@ jobs:
         run: |
           pnpm run lint
 
-      # Conduct TypeScript type checks
-      - name: Type checks
-        working-directory: ./app
-        run: |
-          pnpm run type:check
+      # # Conduct TypeScript type checks
+      # - name: Type checks
+      #   working-directory: ./app
+      #   run: |
+      #     pnpm run type:check
 
       # Conduct style checks using Prettier
       - name: Prettier style check

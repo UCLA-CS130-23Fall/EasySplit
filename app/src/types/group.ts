@@ -1,11 +1,12 @@
 interface GroupType {
-  groupID?: string;
+  objectId?: string;
   name: string;
   description: string;
-  ownerID: string;
-  memberIDs: string[];
-  billIDs: string[];
-  createDate?: string; // ISO string format for date
+  owner: string;
+  members: string[];
+  bills: string[];
+  createAt?: string; // ISO string format for date
+  updateAt?: string; // ISO string format for date
 }
 
 export default GroupType;

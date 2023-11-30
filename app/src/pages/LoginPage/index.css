@@ -1,19 +1,15 @@
-#parent {
-  text-align: center;
-  height: 500px;
-  width: 1000px;
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This makes the div take the full viewport height */
+  width: auto;
 }
-.block {
-  height: 300px;
-  width: 500px;
-  text-align: left;
-}
-.center {
-  margin: auto;
-}
-.left {
-  margin: auto auto auto 0;
-}
-.right {
-  margin: auto 0 auto auto;
+
+.header-style {
+  font-size: 2.5rem;
+  color: #575757;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
