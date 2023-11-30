@@ -20,7 +20,6 @@ type FieldType = {
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
 
   const onLoginFinish = (values: any, isSignUp: boolean) => {
     if (isSignUp) {
@@ -33,133 +32,123 @@ const LoginForm: React.FC = () => {
 
       Bmob.User.register(signUpParams)
         .then(() => {
-          messageApi.open({
-            type: "success",
-            content: "Register success!",
-          });
+          message.success("Register success!");
           setIsSignUp(false);
         })
         .catch((err) => {
-          messageApi.open({
-            type: "error",
-            content: "Register failed: " + err.error,
-          });
+          message.error("Register failed: " + err.error);
         });
     } else {
       Bmob.User.login(values.username, values.password)
         .then(() => {
-          messageApi.open({
-            type: "success",
-            content: "Login success! Welcome back!",
-          });
+          message.success("Login success! Welcome back!");
           navigate(`/user/${values.username}`);
         })
         .catch((err) => {
-          messageApi.open({
-            type: "error",
-            content: "Login failed: " + err.error,
-          });
+          message.error("Login failed: " + err.error);
         });
     }
   };
 
   const onLoginFinishFailed = (errorInfo: any) => {
-    messageApi.open({
-      type: "error",
-      content: "Login failed: " + errorInfo,
-    });
+    message.error("Login failed: " + errorInfo.error);
   };
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
   };
 
+  const formStyle = {
+    maxWidth: 600,
+    minWidth: 400,
+    margin: "auto",
+  };
+
   return (
-    <>
-      {contextHolder}
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
-        onFinish={(values) => onLoginFinish(values, isSignUp)}
-        onFinishFailed={onLoginFinishFailed}
-        autoComplete="off"
+    <Form
+      name="basic"
+      style={formStyle}
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      initialValues={{ remember: true }}
+      onFinish={(values) => onLoginFinish(values, isSignUp)}
+      onFinishFailed={onLoginFinishFailed}
+      autoComplete="off"
+    >
+      <Form.Item<FieldType>
+        label="Username"
+        name="username"
+        rules={[{ required: true, message: "Please input your username!" }]}
       >
-        <Form.Item<FieldType>
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
-        >
-          <Input />
-        </Form.Item>
+        <Input />
+      </Form.Item>
 
-        <Form.Item<FieldType>
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
+      <Form.Item<FieldType>
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-        {isSignUp && (
-          <>
-            <Form.Item<FieldType>
-              label="Confirm Password"
-              name="confirmPassword"
-              dependencies={["password"]}
-              rules={[
-                {
-                  required: true,
-                  message: "Please confirm your password!",
+      {isSignUp && (
+        <>
+          <Form.Item<FieldType>
+            label="Confirm Password"
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!",
+                    ),
+                  );
                 },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error(
-                        "The two passwords that you entered do not match!",
-                      ),
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-            <Form.Item<FieldType>
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
-            >
-              <Input />
-            </Form.Item>
+          <Form.Item<FieldType>
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
+          >
+            <Input />
+          </Form.Item>
 
-            <Form.Item<FieldType>
-              label="Phone"
-              name="phone"
-              rules={[
-                { required: true, message: "Please input your phone number!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </>
-        )}
+          <Form.Item<FieldType>
+            label="Phone"
+            name="phone"
+            rules={[
+              { required: true, message: "Please input your phone number!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </>
+      )}
 
-        <Form.Item<FieldType>
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}
-        >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+      <Form.Item<FieldType>
+        name="remember"
+        valuePropName="checked"
+        wrapperCol={{ offset: 8, span: 16 }}
+      >
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <Button type="primary" htmlType="submit">
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
@@ -168,9 +157,9 @@ const LoginForm: React.FC = () => {
               ? "Already have an account? Sign In"
               : "Don't have an account? Sign Up"}
           </Button>
-        </Form.Item>
-      </Form>
-    </>
+        </div>
+      </Form.Item>
+    </Form>
   );
 };
 
