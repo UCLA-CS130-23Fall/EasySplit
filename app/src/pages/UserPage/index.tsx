@@ -70,7 +70,7 @@ export default function LoginPage() {
       },
       (err) => {
         message.error("Group created failed! " + err.message);
-      },
+      }
     );
   };
 
@@ -88,13 +88,13 @@ export default function LoginPage() {
     groupQuery.destroy(e.objectId).then(
       () => {
         setGroupData((prev) =>
-          prev.filter((group) => group.objectId !== e.objectId),
+          prev.filter((group) => group.objectId !== e.objectId)
         );
         message.success("Group deleted successfully!");
       },
       (err) => {
         message.error("Group deleted failed! " + err.message);
-      },
+      }
     );
   };
 
@@ -114,7 +114,7 @@ export default function LoginPage() {
             bills: group.bills,
             createAt: group.createAt,
             updateAt: group.updateAt,
-          }),
+          })
         );
         setGroupData(formattedGroupData);
       })
@@ -135,7 +135,7 @@ export default function LoginPage() {
             phone: member.phone,
             createAt: member.createAt,
             updateAt: member.updateAt,
-          }),
+          })
         );
         setMemberData(formattedMemberData);
       })
@@ -176,8 +176,6 @@ export default function LoginPage() {
               <List.Item
                 actions={[
                   <Button
-                    type="primary"
-                    danger
                     shape="circle"
                     icon={<DeleteOutlined />}
                     onClick={() => handleDeleteGroup(item)}
