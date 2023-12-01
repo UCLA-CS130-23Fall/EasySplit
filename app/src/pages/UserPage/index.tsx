@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, Button, List, Modal, Form, Input, Select, message } from "antd";
+import {
+  Card,
+  Button,
+  List,
+  Modal,
+  Form,
+  Input,
+  Select,
+  message,
+  Table,
+} from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import type { SelectProps } from "antd";
 import GroupType from "../../types/group";
 import UserType from "../../types/user";
+import BillType from "../../types/bill";
 import "./index.css";
 
 import Bmob from "hydrogen-js-sdk";
@@ -20,6 +31,7 @@ export default function LoginPage() {
   const current = Bmob.User.current();
   const [groupData, setGroupData] = useState<GroupType[]>([]);
   const [memberData, setMemberData] = useState<UserType[]>([]);
+  const [userBillData, setUserBillData] = useState<BillType[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
@@ -142,6 +154,32 @@ export default function LoginPage() {
       .catch((err) => {
         console.log(err);
       });
+
+    // fetch bill data by the current user as the owner
+    const billQuery = Bmob.Query("Bill");
+    const current = Bmob.User.current();
+    billQuery.equalTo("owner", "==", current.objectId);
+    billQuery
+      .find()
+      .then((res) => {
+        const formattedBillData = (res as BillType[]).map((bill: BillType) => ({
+          objectId: bill.objectId,
+          name: bill.name,
+          payers: bill.payers,
+          description: bill.description,
+          owner: bill.owner,
+          group: bill.group,
+          price: bill.price,
+          status: bill.status,
+          createAt: bill.createAt,
+          updateAt: bill.updateAt,
+          completeAt: bill.completeAt,
+        }));
+        setUserBillData(formattedBillData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -234,6 +272,35 @@ export default function LoginPage() {
           <Button type="primary" onClick={handleAddBill}>
             Add Bill
           </Button>
+        </Card>
+        <Card title="Bills" bordered={false} style={{ width: "100%" }}>
+          <Table
+            rowKey="objectId"
+            style={{ width: "100%", marginTop: "2.5rem" }}
+            dataSource={userBillData}
+            columns={[
+              {
+                title: "Name",
+                dataIndex: "name",
+                key: "name",
+              },
+              {
+                title: "Price",
+                dataIndex: "price",
+                key: "price",
+              },
+              {
+                title: "Status",
+                dataIndex: "status",
+                key: "status",
+              },
+              {
+                title: "Description",
+                dataIndex: "description",
+                key: "description",
+              },
+            ]}
+          />
         </Card>
       </div>
     </>

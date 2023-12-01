@@ -1,15 +1,15 @@
 interface BillType {
+  objectId?: string;
   name: string;
-  groupID?: string;
-  billID: string;
-  ownerID: string;
-  ownerName: string;
-  payerIDs: string[];
-  payerNames: string[];
+  group: string;
+  owner: string;
+  payers: string[];
+  description?: string;
   price: number;
   status: string;
-  createDate?: string;
-  completeDate?: string;
+  createAt?: string;
+  updateAt?: string;
+  completeAt?: string;
 }
 
 export default BillType;
