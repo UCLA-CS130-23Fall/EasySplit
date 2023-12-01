@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, Button, List } from "antd";
+import { Card, Button, List, Spin, Popconfirm } from "antd";
 import GroupType from "../../types/group";
 import "./index.css";
 
@@ -16,18 +16,29 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const current = Bmob.User.current();
   const [groupData, setGroupData] = useState<GroupType[]>([]);
+  const [isGroupLoading, setIsGroupLoading] = useState(false);
 
   const handleLogout = async () => {
     await Bmob.User.logout();
     navigate("/login");
   };
 
+  const confirmLogout = () => {
+    handleLogout();
+  };
+
+  const cancelLogout = () => {
+    // do nothing
+  };
+
   // fetch group data
   useEffect(() => {
     const query = Bmob.Query("Group");
+    setIsGroupLoading(true);
     query
       .find()
       .then((res) => {
+        setIsGroupLoading(false);
         const formattedGroupData = (res as GroupType[]).map(
           (group: GroupType) => ({
             objectId: group.objectId,
@@ -50,42 +61,63 @@ export default function LoginPage() {
   return (
     <>
       <div style={{ padding: "20px" }}>
-        <Card title={`User: ${id}`} bordered={false} style={{ width: "100%" }}>
-          {/* User details */}
-          <p>
-            <strong>Email:</strong> {current.email}
-          </p>
-          <p>
-            <strong>Phone:</strong> {current.phone}
-          </p>
-          <p>
-            <strong>Username:</strong> {current.username}
-          </p>
-          {/* Logout button */}
-          <Button type="primary" onClick={handleLogout}>
-            Logout
-          </Button>
-        </Card>
         <Card
-          title="Bills"
+          title={"User Profile: " + id}
           bordered={false}
-          style={{ width: "100%", marginTop: "1rem" }}
+          style={{ width: "100%" }}
         >
-          <List
-            style={{ width: "100%", marginTop: "2.5rem" }}
-            itemLayout="horizontal"
-            dataSource={groupData}
-            renderItem={(item) => (
-              <List.Item>
-                <List.Item.Meta
-                  style={{ textAlign: "left", paddingLeft: "20px" }}
-                  title={item.name}
-                  description={item.description}
-                />
-              </List.Item>
-            )}
-          />
+          <div
+            style={{ display: "flex", flexDirection: "column", height: "100%" }}
+          >
+            {/* User details */}
+            <div style={{ flex: 1 }}>
+              <p>
+                <strong>Username:</strong> {current.username}
+              </p>
+              <p>
+                <strong>Email:</strong> {current.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {current.phone}
+              </p>
+            </div>
+            {/* Logout button */}
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Popconfirm
+                title="Logout"
+                description="Are you sure to log out?"
+                onConfirm={confirmLogout}
+                onCancel={cancelLogout}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button>Logout</Button>
+              </Popconfirm>
+            </div>
+          </div>
         </Card>
+        <Spin spinning={isGroupLoading}>
+          <Card
+            title="Groups"
+            bordered={false}
+            style={{ width: "100%", marginTop: "1rem" }}
+          >
+            <List
+              style={{ width: "100%" }}
+              itemLayout="horizontal"
+              dataSource={groupData}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta
+                    style={{ textAlign: "left", paddingLeft: "20px" }}
+                    title={item.name}
+                    description={item.description}
+                  />
+                </List.Item>
+              )}
+            />
+          </Card>
+        </Spin>
       </div>
     </>
   );
