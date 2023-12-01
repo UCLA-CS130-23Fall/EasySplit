@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, Button, List, Modal, Form, Input, Select, message } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import type { SelectProps } from "antd";
 import GroupType from "../../types/group";
 import UserType from "../../types/user";
@@ -50,9 +51,6 @@ export default function LoginPage() {
     const relation = Bmob.Relation("_User");
     const memberIDx = relation.add(values.members);
 
-    console.log(values.description);
-    console.log(values.members);
-
     group.set("name", values.name);
     group.set("description", values.description);
     group.set("owner", ownerID);
@@ -72,7 +70,7 @@ export default function LoginPage() {
       },
       (err) => {
         message.error("Group created failed! " + err.message);
-      },
+      }
     );
   };
 
@@ -83,6 +81,21 @@ export default function LoginPage() {
 
   const handleAddBill = () => {
     showModal();
+  };
+
+  const handleDeleteGroup = (e: any) => {
+    const groupQuery = Bmob.Query("Group");
+    groupQuery.destroy(e.objectId).then(
+      () => {
+        setGroupData((prev) =>
+          prev.filter((group) => group.objectId !== e.objectId)
+        );
+        message.success("Group deleted successfully!");
+      },
+      (err) => {
+        message.error("Group deleted failed! " + err.message);
+      }
+    );
   };
 
   useEffect(() => {
@@ -101,7 +114,7 @@ export default function LoginPage() {
             bills: group.bills,
             createAt: group.createAt,
             updateAt: group.updateAt,
-          }),
+          })
         );
         setGroupData(formattedGroupData);
       })
@@ -122,7 +135,7 @@ export default function LoginPage() {
             phone: member.phone,
             createAt: member.createAt,
             updateAt: member.updateAt,
-          }),
+          })
         );
         setMemberData(formattedMemberData);
       })
@@ -160,7 +173,17 @@ export default function LoginPage() {
             itemLayout="horizontal"
             dataSource={groupData}
             renderItem={(item) => (
-              <List.Item>
+              <List.Item
+                actions={[
+                  <Button
+                    type="primary"
+                    danger
+                    shape="circle"
+                    icon={<DeleteOutlined />}
+                    onClick={() => handleDeleteGroup(item)}
+                  />,
+                ]}
+              >
                 <List.Item.Meta
                   style={{ textAlign: "left", paddingLeft: "20px" }}
                   title={item.name}
