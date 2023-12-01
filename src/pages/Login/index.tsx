@@ -3,6 +3,7 @@ import Bmob from 'hydrogen-js-sdk'
 import React, { useEffect } from 'react'
 import LoginForm from './form'
 import { history } from '@vitjs/runtime'
+import './index.less'
 
 const Login: React.FC = () => {
   const current = Bmob.User.current()

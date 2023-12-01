@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { history } from '@vitjs/runtime'
 import { Button, Checkbox, Form, Input, message, Card } from 'antd'
 
 import Bmob from 'hydrogen-js-sdk'
@@ -39,6 +40,7 @@ const LoginForm: React.FC = () => {
     } else {
       Bmob.User.login(values.username, values.password)
         .then(() => {
+          history.push('/app')
           message.success('Login success! Welcome back!')
         })
         .catch((err) => {
