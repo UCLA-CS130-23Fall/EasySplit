@@ -4,40 +4,20 @@
 
 This repo serves as a template for a repository that follows the Scrum process. The following information describes how the native features/workflows of Github can be customized to work in a scrum development process.
 
-### Documentation
+## ✨ Features
 
-1. Create and activate an virtual enviroment with python 3.10
+- 🛠 [TypeScript](https://github.com/microsoft/TypeScript) + [ESLint](https://github.com/eslint/eslint) + [Prettier](https://github.com/prettier/prettier) + [lint-staged](https://github.com/okonet/lint-staged), preset configurations
+- ❤️ [Less](https://github.com/less/less.js) + [Windi CSS](https://github.com/windicss/windicss), enjoyable CSS development experience
+- ⚙️ Preset Vite plugins reasonable, pursue the ultimate development experience
+- 💡 Fully features of [Ant Design](https://github.com/ant-design/ant-design), support style import on demand
+- 💎 Provide different degrees of custom scaffolding, free choice, easy to use
 
-```
-conda create --name easysplit python=3.10
-conda activate easysplit
-```
+## Quick Start
 
-2. Install dependencies
-
-```
-pip install fastapi
-pip install "uvicorn[standard]"
-pip install tinydb
-export PYTHONPATH=$PYTHONPATH:{place pwd here}
-```
-
-3. Install [nodejs](https://nodejs.org/en/download) and related packages `npm install `
-
-4. It may be useful to download [postman](https://www.postman.com/home), which makes building and using APIs easier.
-
-5. To start the backend
+Install `node.js` and make sure you have `npm` command. Run the following commands:
 
 ```
-cd backend
-python server.py
-```
-
-6. To start the frountend
-
-```
-cd app
-npm run dev
+npm install & npm run dev
 ```
 
 ## Issues
