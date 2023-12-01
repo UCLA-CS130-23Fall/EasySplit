@@ -7,7 +7,7 @@ import { HomeOutlined } from '@ant-design/icons'
 import ProLayout from '@ant-design/pro-layout'
 import { history, Link, useLocation } from '@vitjs/runtime'
 
-import GlobalFooter from '@/containers/GlobalFooter'
+import GlobalFooter from '../containers/GlobalFooter'
 
 import defaultSettings from '../../config/defaultSettings'
 

@@ -1,5 +1,5 @@
 {
-  "name": "autoODE",
+  "name": "EasySplit",
   "version": "1.0.0",
   "author": {
     "name": "Yizheng Huang",
@@ -9,15 +9,14 @@
     "build": "vite build",
     "dev": "cross-env BROWSER=chrome vite --host",
     "dev:force": "npm run dev -- --force",
-    "lint": "npm run lint:js && tsc",
-    "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
-    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "prepare": "husky install",
     "prettier": "prettier --check --write \"src/**/*\"",
     "serve": "vite preview --host",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "preview": "vite preview",
+    "format": "prettier --cache --write .",
+    "format:check": "prettier --cache --check .",
+    "type:check": "tsc --noEmit"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
@@ -37,6 +36,7 @@
     "ahooks": "^2.10.0",
     "antd": "^4.14.0",
     "classnames": "^2.2.6",
+    "hydrogen-js-sdk": "^2.5.2",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },

@@ -1,32 +1,32 @@
 import { GithubOutlined } from '@ant-design/icons'
 import { DefaultFooter } from '@ant-design/pro-layout'
 
-const authorId = 'yunsii'
+const authorId = 'UCLA'
 
 export default function GlobalFooter() {
   return (
     <DefaultFooter
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'CS130 23Fall',
+          title: 'CS130 23Fall',
+          href: 'https://github.com/UCLA-CS130-23Fall/EasySplit',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: `https://github.com/${authorId}/vite-react`,
+          href: `https://github.com/UCLA-CS130-23Fall/EasySplit`,
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'UCLA',
+          title: 'UCLA',
+          href: 'https://github.com/UCLA-CS130-23Fall/EasySplit',
           blankTarget: true,
         },
       ]}
-      copyright={`${new Date().getFullYear()} ${authorId} 出品`}
+      copyright={`${new Date().getFullYear()} ${authorId} Copyright`}
     />
   )
 }

@@ -1,30 +1,40 @@
 export default [
   {
     path: '/',
+    component: './pages/Login', // Set login page as root
+  },
+  {
+    path: '/app',
     component: './layouts/RootLayout',
     routes: [
       {
-        path: '/',
+        path: '/app',
         routes: [
           {
-            path: '/',
+            path: '/app',
             component: './layouts/BasicLayout',
             routes: [
               {
-                path: '/',
-                redirect: '/welcome',
+                path: '/app',
+                redirect: '/app/dashboard',
               },
               {
-                path: '/welcome',
-                icon: 'smile',
-                name: '欢迎页',
-                component: './pages/Welcome',
-              },
-              {
-                path: '/ant-design',
+                path: '/app/dashboard',
                 icon: 'star',
-                name: 'Ant Design',
-                component: './pages/AntDesign',
+                name: 'Dashboard',
+                component: './pages/Dashboard',
+              },
+              {
+                path: '/app/group',
+                icon: 'team',
+                name: 'Group',
+                component: './pages/Group',
+              },
+              {
+                path: '/app/settings',
+                icon: 'setting',
+                name: 'Settings',
+                component: './pages/Settings',
               },
             ],
           },
