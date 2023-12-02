@@ -189,175 +189,175 @@ export default function Dashboard() {
 
   return (
     <PageContainer>
-      <Spin spinning={isBillLoading}>
-        <Modal
-          title='Create a new bill'
-          open={isNewBillModalVisible}
-          onOk={handleCreateBillOk}
-          onCancel={handleCreateBillCancel}
+      <Modal
+        title='Create a new bill'
+        open={isNewBillModalVisible}
+        onOk={handleCreateBillOk}
+        onCancel={handleCreateBillCancel}
+      >
+        <Form
+          form={form}
+          name='basicForm'
+          initialValues={{ remember: true }}
+          onFinish={onBillFormFinish}
+          autoComplete='off'
         >
-          <Form
-            form={form}
-            name='basicForm'
-            initialValues={{ remember: true }}
-            onFinish={onBillFormFinish}
-            autoComplete='off'
+          <Form.Item
+            label='Bill Name'
+            name='name'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your name of the bill!',
+              },
+            ]}
           >
-            <Form.Item
-              label='Bill Name'
-              name='name'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your name of the bill!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <Input />
+          </Form.Item>
 
-            {/* add item for price in number */}
-            <Form.Item
-              label='Price'
-              name='price'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your price of the bill!',
-                },
-              ]}
-            >
-              <InputNumber style={{ width: '100%' }} />
-            </Form.Item>
+          {/* add item for price in number */}
+          <Form.Item
+            label='Price'
+            name='price'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your price of the bill!',
+              },
+            ]}
+          >
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
 
-            {/* Add item to select the currency */}
-            <Form.Item
-              label='Currency'
-              name='currency'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select a currency!',
-                },
+          {/* Add item to select the currency */}
+          <Form.Item
+            label='Currency'
+            name='currency'
+            rules={[
+              {
+                required: true,
+                message: 'Please select a currency!',
+              },
+            ]}
+          >
+            <Select
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={[
+                { label: 'USD', value: 'USD' },
+                { label: 'CNY', value: 'CNY' },
+                { label: 'JPY', value: 'JPY' },
+                { label: 'EUR', value: 'EUR' },
+                { label: 'GBP', value: 'GBP' },
+                { label: 'KRW', value: 'KRW' },
+                { label: 'SGD', value: 'SGD' },
+                { label: 'CAD', value: 'CAD' },
+                { label: 'AUD', value: 'AUD' },
               ]}
-            >
-              <Select
-                style={{ width: '100%' }}
-                placeholder='Please select'
-                options={[
-                  { label: 'USD', value: 'USD' },
-                  { label: 'CNY', value: 'CNY' },
-                  { label: 'JPY', value: 'JPY' },
-                  { label: 'EUR', value: 'EUR' },
-                  { label: 'GBP', value: 'GBP' },
-                  { label: 'KRW', value: 'KRW' },
-                  { label: 'SGD', value: 'SGD' },
-                  { label: 'CAD', value: 'CAD' },
-                  { label: 'AUD', value: 'AUD' },
-                ]}
-              />
-            </Form.Item>
+            />
+          </Form.Item>
 
-            {/* Add an iterm to select the bill owner */}
-            <Form.Item
-              label='Owner'
-              name='owner'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select a owner!',
-                },
-              ]}
-            >
-              <Select
-                style={{ width: '100%' }}
-                placeholder='Please select'
-                options={existingMembers}
-              />
-            </Form.Item>
+          {/* Add an iterm to select the bill owner */}
+          <Form.Item
+            label='Owner'
+            name='owner'
+            rules={[
+              {
+                required: true,
+                message: 'Please select a owner!',
+              },
+            ]}
+          >
+            <Select
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={existingMembers}
+            />
+          </Form.Item>
 
-            {/* Add a member selection for whom pay the bill */}
-            <Form.Item
-              label='Payers (equal split)'
-              name='payers'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select payers!',
-                },
-              ]}
-            >
-              <Select
-                mode='multiple'
-                allowClear
-                style={{ width: '100%' }}
-                placeholder='Please select'
-                options={existingMembers}
-              />
-            </Form.Item>
+          {/* Add a member selection for whom pay the bill */}
+          <Form.Item
+            label='Payers (equal split)'
+            name='payers'
+            rules={[
+              {
+                required: true,
+                message: 'Please select payers!',
+              },
+            ]}
+          >
+            <Select
+              mode='multiple'
+              allowClear
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={existingMembers}
+            />
+          </Form.Item>
 
-            <Form.Item
-              label='Group'
-              name='group'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select a group the bill belongs to!',
-                },
-              ]}
-            >
-              <Select
-                style={{ width: '100%' }}
-                placeholder='Please select'
-                options={existingGroups}
-              />
-            </Form.Item>
+          <Form.Item
+            label='Group'
+            name='group'
+            rules={[
+              {
+                required: true,
+                message: 'Please select a group the bill belongs to!',
+              },
+            ]}
+          >
+            <Select
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={existingGroups}
+            />
+          </Form.Item>
 
-            <Form.Item label='Description' name='description'>
-              <Input />
-            </Form.Item>
-          </Form>
-        </Modal>
-        <Card
-          title='Finance Overview'
-          bordered={false}
-          style={{ width: '100%', marginTop: '1rem', padding: '1rem' }}
-        >
-          <Row gutter={16}>
-            <Col span={8}>
-              <Statistic title='Group Joined' value={groupData.length} />
-            </Col>
-            <Col span={8}>
-              <Statistic title='Owned Bills' value={userBillData.length} />
-            </Col>
-          </Row>
-          <Row gutter={10} style={{ marginTop: '1.5rem' }}>
-            <Col span={8}>
-              <Statistic
-                title='Consumption Trend'
-                value={9.3}
-                precision={2}
-                valueStyle={{ color: '#cf1322' }}
-                prefix={<ArrowDownOutlined />}
-                suffix='%'
-              />
-            </Col>
-            <Col span={6}>
-              <Statistic
-                title='Monthly Balance (USD)'
-                value={1230.5}
-                precision={2}
-              />
-            </Col>
-            <Col span={6}>
-              <Statistic
-                title='Total Expense (USD)'
-                value={13250.25}
-                precision={2}
-              />
-            </Col>
-          </Row>
-        </Card>
+          <Form.Item label='Description' name='description'>
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Card
+        title='Finance Overview'
+        bordered={false}
+        style={{ width: '100%', marginTop: '1rem', padding: '1rem' }}
+      >
+        <Row gutter={16}>
+          <Col span={8}>
+            <Statistic title='Group Joined' value={groupData.length} />
+          </Col>
+          <Col span={8}>
+            <Statistic title='Owned Bills' value={userBillData.length} />
+          </Col>
+        </Row>
+        <Row gutter={10} style={{ marginTop: '1.5rem' }}>
+          <Col span={8}>
+            <Statistic
+              title='Consumption Trend'
+              value={9.3}
+              precision={2}
+              valueStyle={{ color: '#cf1322' }}
+              prefix={<ArrowDownOutlined />}
+              suffix='%'
+            />
+          </Col>
+          <Col span={6}>
+            <Statistic
+              title='Monthly Balance (USD)'
+              value={1230.5}
+              precision={2}
+            />
+          </Col>
+          <Col span={6}>
+            <Statistic
+              title='Total Expense (USD)'
+              value={13250.25}
+              precision={2}
+            />
+          </Col>
+        </Row>
+      </Card>
+      <Spin spinning={isBillLoading}>
         <Card
           title='My Bills'
           bordered={false}
