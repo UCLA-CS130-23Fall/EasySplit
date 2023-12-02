@@ -323,10 +323,18 @@ export default function Dashboard() {
           bordered={false}
           style={{ width: '100%', marginTop: '1rem', padding: '1rem' }}
         >
-          <Row gutter={12}>
-            <Col span={12}>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Statistic title='Group Joined' value={groupData.length} />
+            </Col>
+            <Col span={8}>
+              <Statistic title='Owned Bills' value={userBillData.length} />
+            </Col>
+          </Row>
+          <Row gutter={10} style={{ marginTop: '1.5rem' }}>
+            <Col span={8}>
               <Statistic
-                title='Consumption this month'
+                title='Consumption Trend'
                 value={9.3}
                 precision={2}
                 valueStyle={{ color: '#cf1322' }}
@@ -334,10 +342,17 @@ export default function Dashboard() {
                 suffix='%'
               />
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Statistic
-                title='Account Balance (USD)'
+                title='Monthly Balance (USD)'
                 value={1230.5}
+                precision={2}
+              />
+            </Col>
+            <Col span={6}>
+              <Statistic
+                title='Total Expense (USD)'
+                value={13250.25}
                 precision={2}
               />
             </Col>
