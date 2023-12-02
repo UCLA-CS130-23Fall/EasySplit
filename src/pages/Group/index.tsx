@@ -67,6 +67,7 @@ export default function Group() {
     const ownerID = pointer.set(current.objectId)
 
     const relation = Bmob.Relation('_User')
+    values.members.push(current.objectId)
     const memberIDx = relation.add(values.members)
 
     group.set('name', values.name)
