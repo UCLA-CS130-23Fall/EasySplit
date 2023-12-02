@@ -13,7 +13,12 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
+  Cell,
+  Text,
+  PieLabelRenderProps,
 } from 'recharts'
+
+import { COLORS } from '@/data/color'
 
 import Bmob from 'hydrogen-js-sdk'
 Bmob.initialize(
@@ -58,6 +63,52 @@ function Finance() {
             />
           </BarChart>
         </ResponsiveContainer>
+        <div
+          style={{ display: 'flex', flexDirection: 'row', marginTop: '2rem' }}
+        >
+          <ResponsiveContainer width='50%' height={250}>
+            <PieChart width={400} height={400}>
+              <Pie
+                data={categoryData}
+                cx='50%'
+                cy='50%'
+                label
+                labelLine={true}
+                outerRadius={80}
+                fill='#8884d8'
+                dataKey='Sept'
+              >
+                {categoryData.map((_, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width='50%' height={250}>
+            <PieChart width={400} height={400}>
+              <Pie
+                data={categoryData}
+                cx='50%'
+                cy='50%'
+                label
+                labelLine={true}
+                outerRadius={80}
+                fill='#8884d8'
+                dataKey='Oct'
+              >
+                {categoryData.map((_, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </Card>
     </PageContainer>
   )
