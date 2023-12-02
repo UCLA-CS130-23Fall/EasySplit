@@ -51,10 +51,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         )
       }}
       footerRender={() => <GlobalFooter />}
-      // waterMarkProps={{
-      //   content: 'Vite React',
-      //   fontColor: 'rgba(24,144,255,0.15)',
-      // }}
       {...defaultSettings}
     />
   )
