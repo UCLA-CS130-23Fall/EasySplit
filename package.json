@@ -9,13 +9,13 @@
     "build": "vite build",
     "dev": "cross-env BROWSER=chrome vite --host",
     "dev:force": "npm run dev -- --force",
-    "prepare": "husky install",
-    "prettier": "prettier --check --write \"src/**/*\"",
-    "serve": "vite preview --host",
-    "start": "npm run dev",
-    "preview": "vite preview",
     "format": "prettier --cache --write .",
     "format:check": "prettier --cache --check .",
+    "prepare": "husky install",
+    "prettier": "prettier --check --write \"src/**/*\"",
+    "preview": "vite preview",
+    "serve": "vite preview --host",
+    "start": "npm run dev",
     "type:check": "tsc --noEmit"
   },
   "lint-staged": {
@@ -38,6 +38,7 @@
     "classnames": "^2.2.6",
     "hydrogen-js-sdk": "^2.5.2",
     "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "recharts": "^2.10.3"
   },
   "devDependencies": {
