@@ -14,8 +14,8 @@ export default function GroupDetail() {
   const [groupBillData, setGroupBillData] = useState<BillType[]>([])
   const [isGroupLoading, setIsGroupLoading] = useState(false)
   const [isBillLoading, setIsBillLoading] = useState(false)
-  const searchParams = new URLSearchParams(window.location.search);
-  const groupId = searchParams.get('id');
+  const searchParams = new URLSearchParams(window.location.search)
+  const groupId = searchParams.get('id')
 
   useEffect(() => {
     const groupQuery = Bmob.Query('Group')
@@ -24,13 +24,13 @@ export default function GroupDetail() {
       setIsGroupLoading(false)
       setGroupData({
         objectId: group.objectId,
-            name: group.name,
-            description: group.description,
-            owner: group.owner,
-            members: group.members,
-            bills: group.bills,
-            createAt: group.createAt,
-            updateAt: group.updateAt,
+        name: group.name,
+        description: group.description,
+        owner: group.owner,
+        members: group.members,
+        bills: group.bills,
+        createAt: group.createAt,
+        updateAt: group.updateAt,
       })
     })
 
@@ -76,26 +76,28 @@ export default function GroupDetail() {
 
   return (
     <PageContainer>
-      <Spin
-        spinning={isGroupLoading}
-      >
-      <Card
-        title={'Group Details'}
-        bordered={false}
-        style={{ width: '100%' }}
-      >
-
-        <p>Group Name: {groupData.name}</p>
-        <p>Group Description: {groupData.description}</p>
-      </Card>
+      <Spin spinning={isGroupLoading}>
+        <Card
+          title={'Group Details'}
+          bordered={false}
+          style={{ width: '100%' }}
+        >
+          <p>Group Name: {groupData.name}</p>
+          <p>Group Description: {groupData.description}</p>
+        </Card>
       </Spin>
-      <Card title="Group Members" bordered={false} style={{ width: '100%', marginTop: "1rem" }}>
-      </Card>
-      <Spin
-        spinning={isBillLoading}
-      >
-      <Card title="Group Bills" bordered={false} style={{ width: '100%', marginTop: "1rem" }}>
-      <Table
+      <Card
+        title='Group Members'
+        bordered={false}
+        style={{ width: '100%', marginTop: '1rem' }}
+      ></Card>
+      <Spin spinning={isBillLoading}>
+        <Card
+          title='Group Bills'
+          bordered={false}
+          style={{ width: '100%', marginTop: '1rem' }}
+        >
+          <Table
             rowKey='objectId'
             style={{ width: '100%' }}
             dataSource={groupBillData}
@@ -138,7 +140,7 @@ export default function GroupDetail() {
               },
             ]}
           />
-      </Card>
+        </Card>
       </Spin>
     </PageContainer>
   )

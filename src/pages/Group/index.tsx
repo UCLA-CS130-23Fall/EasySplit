@@ -55,7 +55,7 @@ export default function Group() {
   }
 
   const handleGroupDetail = (value: any) => {
-    history.push(`/app/groupdetail?id=${value.objectId}`);
+    history.push(`/app/groupdetail?id=${value.objectId}`)
   }
 
   const onGroupFormFinish = (values: any) => {
@@ -212,7 +212,11 @@ export default function Group() {
             renderItem={(item) => (
               <List.Item
                 actions={[
-                  <Button shape='circle' icon={<EyeOutlined />} onClick={() => handleGroupDetail(item)}/>,
+                  <Button
+                    shape='circle'
+                    icon={<EyeOutlined />}
+                    onClick={() => handleGroupDetail(item)}
+                  />,
                   <Popconfirm
                     title='Are you sure to delete this group?'
                     onConfirm={() => handleDeleteGroup(item)}
