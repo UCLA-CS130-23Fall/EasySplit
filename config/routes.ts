@@ -8,6 +8,10 @@ export default [
     component: './layouts/RootLayout',
     routes: [
       {
+        path: '/app/groupdetail',
+        component: './pages/GroupDetail',
+      },
+      {
         path: '/app',
         routes: [
           {

@@ -3,6 +3,10 @@ import { Card, Button, Popconfirm } from 'antd'
 import { history } from '@vitjs/runtime'
 
 import Bmob from 'hydrogen-js-sdk'
+Bmob.initialize(
+  import.meta.env.VITE_BMOB_SECRET_KEY,
+  import.meta.env.VITE_BMOB_API_KEY,
+)
 
 export default function Settings() {
   const current = Bmob.User.current()

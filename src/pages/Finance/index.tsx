@@ -11,6 +11,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  PieChart,
+  Pie,
 } from 'recharts'
 
 import Bmob from 'hydrogen-js-sdk'
