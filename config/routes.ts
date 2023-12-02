@@ -25,6 +25,12 @@ export default [
                 component: './pages/Dashboard',
               },
               {
+                path: '/app/finance',
+                icon: 'fund',
+                name: 'Finance',
+                component: './pages/Finance',
+              },
+              {
                 path: '/app/group',
                 icon: 'team',
                 name: 'Group',

@@ -5,6 +5,7 @@ export interface BillType {
   owner: string
   payers: string[]
   description?: string
+  currency?: string
   price: number
   status: string
   createAt?: string
