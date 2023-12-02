@@ -12,6 +12,7 @@ import {
   Popconfirm,
 } from 'antd'
 import type { SelectProps } from 'antd'
+import { history } from '@vitjs/runtime'
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { GroupType, UserType } from '@/type/es'
 
@@ -51,6 +52,10 @@ export default function Group() {
 
   const handleAddGroup = () => {
     showModal()
+  }
+
+  const handleGroupDetail = (value: any) => {
+    history.push(`/app/groupdetail?id=${value.objectId}`);
   }
 
   const onGroupFormFinish = (values: any) => {
@@ -207,7 +212,7 @@ export default function Group() {
             renderItem={(item) => (
               <List.Item
                 actions={[
-                  <Button shape='circle' icon={<EyeOutlined />} />,
+                  <Button shape='circle' icon={<EyeOutlined />} onClick={() => handleGroupDetail(item)}/>,
                   <Popconfirm
                     title='Are you sure to delete this group?'
                     onConfirm={() => handleDeleteGroup(item)}
