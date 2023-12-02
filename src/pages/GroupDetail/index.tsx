@@ -1,7 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Card, Table, Tag, Spin } from 'antd'
+import {
+  Card,
+  Table,
+  Tag,
+  Spin,
+  List,
+  Popconfirm,
+  Button,
+  message,
+  Descriptions,
+  Row,
+  Col,
+  Statistic,
+} from 'antd'
+import { DeleteOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-layout'
-import type { GroupType, BillType } from '@/type/es'
+import type { GroupType, BillType, UserType } from '@/type/es'
 
 import Bmob from 'hydrogen-js-sdk'
 Bmob.initialize(
@@ -12,8 +26,11 @@ Bmob.initialize(
 export default function GroupDetail() {
   const [groupData, setGroupData] = useState<GroupType>({} as GroupType)
   const [groupBillData, setGroupBillData] = useState<BillType[]>([])
+  const [groupMemberData, setGroupMemberData] = useState<UserType[]>([])
+  const [ownerData, setOwnerData] = useState<UserType>({} as UserType)
   const [isGroupLoading, setIsGroupLoading] = useState(false)
   const [isBillLoading, setIsBillLoading] = useState(false)
+  const [isMemberLoading, setIsMemberLoading] = useState(false)
   const searchParams = new URLSearchParams(window.location.search)
   const groupId = searchParams.get('id')
 
@@ -26,17 +43,92 @@ export default function GroupDetail() {
         objectId: group.objectId,
         name: group.name,
         description: group.description,
-        owner: group.owner,
+        owner: group.owner.objectId,
         members: group.members,
         bills: group.bills,
         createAt: group.createAt,
         updateAt: group.updateAt,
       })
+      fetchUserPointer(group.owner.objectId)
     })
 
     // fetch group bill data
     fetchCurrentGroupBillData()
+
+    // fetch group member data
+    fetchGroupMemberData()
   }, [])
+
+  const cancelModal = () => {
+    // do nothing
+  }
+
+  // delete user from the group
+  const handleDeleteUser = (item: UserType) => {
+    const groupQuery = Bmob.Query('Group')
+    const relation = Bmob.Relation('_User')
+    const relID = relation.remove([item.objectId])
+    groupQuery
+      .get(groupId)
+      .then((res) => {
+        res.set('members', relID)
+        res.save()
+        fetchGroupMemberData()
+        message.success('Delete user successfully!')
+      })
+      .catch((err) => {
+        console.log(err)
+        message.error('Delete user failed!')
+      })
+  }
+
+  const fetchGroupMemberData = () => {
+    // fetch member data by the current group
+    setIsMemberLoading(true)
+    const groupQuery = Bmob.Query('Group')
+    groupQuery.field('members', groupId)
+    groupQuery
+      .relation('_User')
+      .then((res) => {
+        const formattedMemberData = (res.results as UserType[]).map(
+          (member) => ({
+            objectId: member.objectId,
+            username: member.username,
+            email: member.email,
+            phone: member.phone,
+            group: groupId,
+            createAt: member.createAt,
+            updateAt: member.updateAt,
+          }),
+        )
+        setIsMemberLoading(false)
+        setGroupMemberData(formattedMemberData)
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsMemberLoading(false)
+      })
+  }
+
+  const fetchUserPointer = (userId: string) => {
+    const query = Bmob.Query('Group')
+    query.include('owner', userId)
+    query
+      .find()
+      .then((res) => {
+        setOwnerData({
+          objectId: res[0].owner.objectId,
+          username: res[0].owner.username,
+          email: res[0].owner.email,
+          phone: res[0].owner.phone,
+          createAt: res[0].owner.createAt,
+          updateAt: res[0].owner.updateAt,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   const fetchCurrentGroupBillData = () => {
     // fetch bill data by the current user as the owner
@@ -80,17 +172,65 @@ export default function GroupDetail() {
         <Card
           title={'Group Details'}
           bordered={false}
-          style={{ width: '100%' }}
+          style={{ width: '100%', padding: '1rem' }}
         >
-          <p>Group Name: {groupData.name}</p>
-          <p>Group Description: {groupData.description}</p>
+          <Descriptions>
+            <Descriptions.Item label='Name'>{}</Descriptions.Item>
+            <Descriptions.Item label='Descriptions'>
+              {groupData.description}
+            </Descriptions.Item>
+            <Descriptions.Item label='Owner Name'>
+              {ownerData.username}
+            </Descriptions.Item>
+          </Descriptions>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Statistic
+                title='Activate Members'
+                value={groupMemberData.length}
+              />
+            </Col>
+            <Col span={8}>
+              <Statistic title='Number of Bills' value={groupBillData.length} />
+            </Col>
+          </Row>
         </Card>
       </Spin>
-      <Card
-        title='Group Members'
-        bordered={false}
-        style={{ width: '100%', marginTop: '1rem' }}
-      ></Card>
+      <Spin spinning={isMemberLoading}>
+        <Card
+          title='Group Members'
+          bordered={false}
+          style={{ width: '100%', marginTop: '1rem' }}
+        >
+          <List
+            style={{ width: '100%' }}
+            itemLayout='horizontal'
+            dataSource={groupMemberData}
+            renderItem={(item) => (
+              <List.Item
+                actions={[
+                  <Popconfirm
+                    title='Are you sure to remove this user?'
+                    onConfirm={() => handleDeleteUser(item)}
+                    onCancel={cancelModal}
+                    okText='Yes'
+                    cancelText='No'
+                  >
+                    <Button shape='circle' icon={<DeleteOutlined />} />
+                  </Popconfirm>,
+                ]}
+              >
+                <List.Item.Meta
+                  style={{ textAlign: 'left', paddingLeft: '20px' }}
+                  title={item.username}
+                  description={item.email}
+                />
+              </List.Item>
+            )}
+          />
+        </Card>
+      </Spin>
+
       <Spin spinning={isBillLoading}>
         <Card
           title='Group Bills'
