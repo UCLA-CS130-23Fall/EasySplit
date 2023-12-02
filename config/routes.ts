@@ -8,16 +8,16 @@ export default [
     component: './layouts/RootLayout',
     routes: [
       {
-        path: '/app/groupdetail',
-        component: './pages/GroupDetail',
-      },
-      {
         path: '/app',
         routes: [
           {
             path: '/app',
             component: './layouts/BasicLayout',
             routes: [
+              {
+                path: '/app/groupdetail',
+                component: './pages/GroupDetail',
+              },
               {
                 path: '/app',
                 redirect: '/app/dashboard',
