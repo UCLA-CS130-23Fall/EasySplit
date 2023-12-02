@@ -18,6 +18,7 @@ import {
   message,
 } from 'antd'
 import { ArrowDownOutlined } from '@ant-design/icons'
+import { categoryList } from '@/data/category'
 
 import Bmob from 'hydrogen-js-sdk'
 Bmob.initialize(
@@ -147,6 +148,7 @@ export default function Dashboard() {
           name: bill.name,
           currency: bill.currency,
           payers: bill.payers,
+          category: bill.category,
           description: bill.description,
           owner: bill.owner,
           group: bill.group,
@@ -312,6 +314,24 @@ export default function Dashboard() {
             />
           </Form.Item>
 
+          {/* Add a selection for category */}
+          <Form.Item
+            label='Category'
+            name='category'
+            rules={[
+              {
+                required: true,
+                message: 'Please select a category!',
+              },
+            ]}
+          >
+            <Select
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={categoryList}
+            />
+          </Form.Item>
+
           <Form.Item label='Description' name='description'>
             <Input />
           </Form.Item>
@@ -373,7 +393,7 @@ export default function Dashboard() {
               placeholder='search the bill'
               onSearch={onSearch}
               enterButton
-              style={{ width: '50%', marginRight: '5px' }}
+              style={{ width: '40%', marginRight: '5px' }}
             />
             <Button
               type='primary'

@@ -7,6 +7,7 @@ export interface BillType {
   description?: string
   currency?: string
   price: number
+  category?: string
   status: string
   createAt?: string
   updateAt?: string
