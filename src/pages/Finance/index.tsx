@@ -71,11 +71,13 @@ function Finance() {
         >
           <ResponsiveContainer width='40%' height={250}>
             <PieChart width={400} height={400}>
+            <Tooltip />
               <Pie
                 data={categoryData}
                 cx='50%'
                 cy='50%'
                 label
+                nameKey='category'
                 labelLine={true}
                 outerRadius={80}
                 dataKey='Sept'
@@ -91,11 +93,13 @@ function Finance() {
           </ResponsiveContainer>
           <ResponsiveContainer width='40%' height={250}>
             <PieChart width={400} height={400}>
+            <Tooltip />
               <Pie
                 data={categoryData}
                 cx='50%'
                 cy='50%'
                 label
+                nameKey='category'
                 labelLine={true}
                 outerRadius={80}
                 dataKey='Oct'
@@ -111,11 +115,13 @@ function Finance() {
           </ResponsiveContainer>
           <ResponsiveContainer width='40%' height={250}>
             <PieChart width={400} height={400}>
+            <Tooltip />
               <Pie
                 data={categoryData}
                 cx='50%'
                 cy='50%'
                 label
+                nameKey='category'
                 labelLine={true}
                 outerRadius={80}
                 dataKey='Nov'
