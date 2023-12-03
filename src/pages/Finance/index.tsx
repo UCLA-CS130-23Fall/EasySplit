@@ -70,6 +70,7 @@ function Finance() {
           style={{ display: 'flex', flexDirection: 'row', marginTop: '2rem' }}
         >
           <ResponsiveContainer width='40%' height={250}>
+            <h3>September</h3>
             <PieChart width={400} height={400}>
               <Tooltip />
               <Pie
@@ -92,6 +93,7 @@ function Finance() {
             </PieChart>
           </ResponsiveContainer>
           <ResponsiveContainer width='40%' height={250}>
+            <h3>October</h3>
             <PieChart width={400} height={400}>
               <Tooltip />
               <Pie
@@ -114,6 +116,7 @@ function Finance() {
             </PieChart>
           </ResponsiveContainer>
           <ResponsiveContainer width='40%' height={250}>
+            <h3>November</h3>
             <PieChart width={400} height={400}>
               <Tooltip />
               <Pie
