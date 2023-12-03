@@ -71,7 +71,7 @@ function Finance() {
         >
           <ResponsiveContainer width='40%' height={250}>
             <PieChart width={400} height={400}>
-            <Tooltip />
+              <Tooltip />
               <Pie
                 data={categoryData}
                 cx='50%'
@@ -93,7 +93,7 @@ function Finance() {
           </ResponsiveContainer>
           <ResponsiveContainer width='40%' height={250}>
             <PieChart width={400} height={400}>
-            <Tooltip />
+              <Tooltip />
               <Pie
                 data={categoryData}
                 cx='50%'
@@ -115,7 +115,7 @@ function Finance() {
           </ResponsiveContainer>
           <ResponsiveContainer width='40%' height={250}>
             <PieChart width={400} height={400}>
-            <Tooltip />
+              <Tooltip />
               <Pie
                 data={categoryData}
                 cx='50%'
