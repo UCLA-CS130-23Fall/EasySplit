@@ -175,7 +175,7 @@ export default function GroupDetail() {
           style={{ width: '100%', padding: '1rem' }}
         >
           <Descriptions>
-            <Descriptions.Item label='Name'>{}</Descriptions.Item>
+            <Descriptions.Item label='Name'>{groupData.name}</Descriptions.Item>
             <Descriptions.Item label='Descriptions'>
               {groupData.description}
             </Descriptions.Item>
