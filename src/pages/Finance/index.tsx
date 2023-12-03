@@ -1,5 +1,5 @@
 import { PageContainer } from '@ant-design/pro-layout'
-import { Card } from 'antd'
+import { Card, DatePicker, Space } from 'antd'
 import { categoryData } from '@/data/category'
 import {
   BarChart,
@@ -26,6 +26,8 @@ Bmob.initialize(
   import.meta.env.VITE_BMOB_API_KEY,
 )
 
+const { RangePicker } = DatePicker;
+
 function Finance() {
   return (
     <PageContainer>
@@ -34,6 +36,9 @@ function Finance() {
         title='Category'
         style={{ width: '100%', marginTop: '1rem' }}
       >
+       <ResponsiveContainer width='100%' height={50}>
+        <RangePicker />
+       </ResponsiveContainer>
         <ResponsiveContainer width='100%' height={280}>
           <BarChart
             width={1000}
