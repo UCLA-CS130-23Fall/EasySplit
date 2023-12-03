@@ -29,8 +29,10 @@ Bmob.initialize(
 export default function Dashboard() {
   const current = Bmob.User.current()
   const [form] = Form.useForm()
+  const [settleUpForm] = Form.useForm()
   const [isBillLoading, setIsBillLoading] = useState(false)
   const [isNewBillModalVisible, setIsNewBillModalVisible] = useState(false)
+  const [isSettleModalVisible, setIsSettleModalVisible] = useState(false)
   const [groupData, setGroupData] = useState<GroupType[]>([])
   const [userBillData, setUserBillData] = useState<BillType[]>([])
   const [memberData, setMemberData] = useState<UserType[]>([])
@@ -44,6 +46,13 @@ export default function Dashboard() {
     value: group.objectId,
   }))
 
+  const pendingBills = userBillData
+    .filter((bill) => bill.status === 'pending')
+    .map((bill) => ({
+      label: bill.name,
+      value: bill.objectId,
+    }))
+
   const { Search } = Input
 
   useEffect(() => {
@@ -56,15 +65,6 @@ export default function Dashboard() {
   }, [])
 
   const onSearch = (value: string) => console.log(value)
-
-  const showNewBillModal = () => {
-    setIsNewBillModalVisible(true)
-  }
-
-  const cancelModal = () => {
-    // do nothing
-  }
-
   const handleCreateBillOk = () => {
     form.submit()
   }
@@ -74,7 +74,38 @@ export default function Dashboard() {
   }
 
   const handleAddBill = () => {
-    showNewBillModal()
+    setIsNewBillModalVisible(true)
+  }
+
+  const handleSettleUpOk = () => {
+    settleUpForm.submit()
+  }
+
+  const handleSettleUpCancel = () => {
+    setIsSettleModalVisible(false)
+  }
+
+  const handleBillSettle = () => {
+    setIsSettleModalVisible(true)
+  }
+
+  // update the bill status
+  const onBillSettleUp = (values: any) => {
+    const billQuery = Bmob.Query('Bill')
+    billQuery.set('id', values.bill)
+    billQuery.set('status', values.status)
+    billQuery
+      .save()
+      .then((res) => {
+        message.success('Bill settled up successfully! at ' + res.updatedAt)
+        fetchCurrentUserBillData()
+        setIsSettleModalVisible(false)
+      })
+      .catch((err) => {
+        message.error('Bill settled up failed! ' + err.message)
+        console.log(err)
+        setIsSettleModalVisible(false)
+      })
   }
 
   const onBillFormFinish = (values: any) => {
@@ -191,6 +222,58 @@ export default function Dashboard() {
 
   return (
     <PageContainer>
+      <Modal
+        title='Settle up'
+        open={isSettleModalVisible}
+        onOk={handleSettleUpOk}
+        onCancel={handleSettleUpCancel}
+      >
+        <Form
+          form={settleUpForm}
+          name='basicForm'
+          initialValues={{ remember: true }}
+          onFinish={onBillSettleUp}
+          autoComplete='off'
+        >
+          {/* Add an iterm to select the bill owner */}
+          <Form.Item
+            label='Select a bill'
+            name='bill'
+            rules={[
+              {
+                required: true,
+                message: 'Please select a bill!',
+              },
+            ]}
+          >
+            <Select
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={pendingBills}
+            />
+          </Form.Item>
+          {/* select the status you want set for the bill */}
+          <Form.Item
+            label='Status'
+            name='status'
+            rules={[
+              {
+                required: true,
+                message: 'Please select a status!',
+              },
+            ]}
+          >
+            <Select
+              style={{ width: '100%' }}
+              placeholder='Please select'
+              options={[
+                { label: 'Pending', value: 'pending' },
+                { label: 'Completed', value: 'completed' },
+              ]}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
       <Modal
         title='Create a new bill'
         open={isNewBillModalVisible}
@@ -402,7 +485,11 @@ export default function Dashboard() {
             >
               Add new bill
             </Button>
-            <Button style={{ marginRight: '5px' }} danger>
+            <Button
+              style={{ marginRight: '5px' }}
+              onClick={handleBillSettle}
+              danger
+            >
               Settle up
             </Button>
             <Button style={{ marginRight: '5px' }}>Convert to USD</Button>
