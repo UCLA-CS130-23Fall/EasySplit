@@ -14,6 +14,8 @@ This repo serves as a template for a repository that follows the Scrum process. 
 
 ## Quick Start
 
+### 1.
+
 Create an `.env` file under the root directory and add the following line:
 
 ```
@@ -21,11 +23,18 @@ VITE_BMOB_SECRET_KEY = d44c1852ef129122
 VITE_BMOB_API_KEY = Abc123456@
 ```
 
+### 2.
+
 Install `node.js` and make sure you have `npm` command. Run the following commands:
 
 ```
 npm install & npm run dev
 ```
+
+
+### 3.
+
+Open [http://192.168.1.47:8000/](http://192.168.1.47:8000/) to start the application.
 
 ## Issues
 
