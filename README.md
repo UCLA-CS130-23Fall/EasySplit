@@ -31,7 +31,6 @@ Install `node.js` and make sure you have `npm` command. Run the following comman
 npm install & npm run dev
 ```
 
-
 ### 3.
 
 Open [http://192.168.1.47:8000/](http://192.168.1.47:8000/) to start the application.
