@@ -2,19 +2,31 @@
 
 ![Build Status](https://github.com/UCLA-CS130-23Fall/EasySplit/actions/workflows/checks.yml/badge.svg) ![Build Status](https://github.com/UCLA-CS130-23Fall/EasySplit/actions/workflows/epics.yml/badge.svg) [![Release](https://img.shields.io/github/v/release/melaasar/cs130-template?label=release)](https://github.com/melaasar/cs130-template/releases/latest)
 
-This repo serves as a template for a repository that follows the Scrum process. The following information describes how the native features/workflows of Github can be customized to work in a scrum development process.
+Effortlessly manage and split group expenses for trips, outings, and shared living with friends and family, ensuring everyone stays informed and balanced.
 
 ## ✨ Features
 
-- 🛠 [TypeScript](https://github.com/microsoft/TypeScript) + [ESLint](https://github.com/eslint/eslint) + [Prettier](https://github.com/prettier/prettier) + [lint-staged](https://github.com/okonet/lint-staged), preset configurations
-- ❤️ [Less](https://github.com/less/less.js) + [Windi CSS](https://github.com/windicss/windicss), enjoyable CSS development experience
-- ⚙️ Preset Vite plugins reasonable, pursue the ultimate development experience
-- 💡 Fully features of [Ant Design](https://github.com/ant-design/ant-design), support style import on demand
-- 💎 Provide different degrees of custom scaffolding, free choice, easy to use
+|Dashboard|Analysis|
+|:--:|:--:|
+|<img width="1492" alt="Screenshot 2023-12-06 at 10 55 14 AM" src="https://github.com/UCLA-CS130-23Fall/EasySplit/assets/15646062/a8e74768-1450-4b45-80b9-647acb36067e">|<img width="1503" alt="Screenshot 2023-12-06 at 10 55 23 AM" src="https://github.com/UCLA-CS130-23Fall/EasySplit/assets/15646062/7e3c1291-263d-405f-b7c0-f85fa57b03f6">|
+
+- 🛠 User and Group Management
+    - Unified User Profiles
+    - Dynamic Group Creation
+    - Personalized Notifications
+- ❤️ Bill Management
+    - Versatile Bill Splitting
+    - Multiple-currency Support
+    - LLM-Based Spending Suggestion 
+- 💡 Cost Visualization and Analysis
+    - Analytical Reports
+    - Exportable Data
+
+
 
 ## Quick Start
 
-### 1.
+### 1. Create the BaaS API environment
 
 Create an `.env` file under the root directory and add the following line:
 
@@ -23,17 +35,23 @@ VITE_BMOB_SECRET_KEY = d44c1852ef129122
 VITE_BMOB_API_KEY = Abc123456@
 ```
 
-### 2.
+### 2. Install Node.js and equired packages
 
 Install `node.js` and make sure you have `npm` command. Run the following commands:
 
 ```
-npm install & npm run dev
+npm install 
 ```
 
-### 3.
+### 3. Start the application
 
-Open [http://192.168.1.47:8000/](http://192.168.1.47:8000/) to start the application.
+Run 
+
+```bash
+npm start
+```
+
+Open [http://localhost:8000/](http://localhost:8000/) to start the application.
 
 ## Issues
 
