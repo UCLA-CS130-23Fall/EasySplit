@@ -186,12 +186,24 @@ export default function GroupDetail() {
           <Row gutter={16}>
             <Col span={8}>
               <Statistic
-                title='Activate Members'
+                title='Active Members'
                 value={groupMemberData.length}
               />
             </Col>
             <Col span={8}>
-              <Statistic title='Number of Bills' value={groupBillData.length} />
+              <Statistic
+                title='Number of Unpaid Bills'
+                value={
+                  groupBillData.filter((bill) => bill.status == 'pending')
+                    .length
+                }
+              />
+            </Col>
+            <Col span={8}>
+              <Statistic
+                title='Total Number of Bills'
+                value={groupBillData.length}
+              />
             </Col>
           </Row>
         </Card>
