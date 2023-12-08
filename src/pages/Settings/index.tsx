@@ -23,7 +23,7 @@ Bmob.initialize(
 )
 
 export default function Settings() {
-  const current = Bmob.User.current()
+  const current = Bmob.User.current() as any
 
   const confirmLogout = () => {
     handleLogout()
