@@ -24,7 +24,7 @@ Bmob.initialize(
 
 export default function Group() {
   const [form] = Form.useForm()
-  const current = Bmob.User.current()
+  const current = Bmob.User.current() as any
   const [groupData, setGroupData] = useState<GroupType[]>([])
   const [memberData, setMemberData] = useState<UserType[]>([])
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -64,11 +64,11 @@ export default function Group() {
     // create group
     const group = Bmob.Query('Group')
     const pointer = Bmob.Pointer('_User')
-    const ownerID = pointer.set(current.objectId)
+    const ownerID = pointer.set(current.objectId) as unknown as string
 
     const relation = Bmob.Relation('_User')
     values.members.push(current.objectId)
-    const memberIDx = relation.add(values.members)
+    const memberIDx = relation.add(values.members) as unknown as string
 
     group.set('name', values.name)
     group.set('description', values.description)
@@ -83,8 +83,8 @@ export default function Group() {
     }
 
     group.save().then(
-      (res) => {
-        setGroupData((prev) => [...prev, newGroup])
+      (res: any) => {
+        setGroupData((prev: any) => [...prev, newGroup])
         message.success('Group created successfully! at ' + res.createdAt)
       },
       (err) => {
@@ -114,7 +114,7 @@ export default function Group() {
     setIsGroupLoading(true)
     groupQuery
       .find()
-      .then((res) => {
+      .then((res: any) => {
         setIsGroupLoading(false)
         const formattedGroupData = (res as GroupType[]).map(
           (group: GroupType) => ({
@@ -138,7 +138,7 @@ export default function Group() {
     const memberQuery = Bmob.Query('_User')
     memberQuery
       .find()
-      .then((res) => {
+      .then((res: any) => {
         const formattedMemberData = (res as UserType[]).map(
           (member: UserType) => ({
             objectId: member.objectId,

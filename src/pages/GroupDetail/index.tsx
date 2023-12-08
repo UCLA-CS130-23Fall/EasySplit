@@ -32,12 +32,12 @@ export default function GroupDetail() {
   const [isBillLoading, setIsBillLoading] = useState(false)
   const [isMemberLoading, setIsMemberLoading] = useState(false)
   const searchParams = new URLSearchParams(window.location.search)
-  const groupId = searchParams.get('id')
+  const groupId = searchParams.get('id') as string
 
   useEffect(() => {
     const groupQuery = Bmob.Query('Group')
     setIsGroupLoading(true)
-    groupQuery.get(groupId).then((group) => {
+    groupQuery.get(groupId).then((group: any) => {
       setIsGroupLoading(false)
       setGroupData({
         objectId: group.objectId,
@@ -66,11 +66,11 @@ export default function GroupDetail() {
   // delete user from the group
   const handleDeleteUser = (item: UserType) => {
     const groupQuery = Bmob.Query('Group')
-    const relation = Bmob.Relation('_User')
+    const relation = Bmob.Relation('_User') as any
     const relID = relation.remove([item.objectId])
     groupQuery
       .get(groupId)
-      .then((res) => {
+      .then((res: any) => {
         res.set('members', relID)
         res.save()
         fetchGroupMemberData()
@@ -89,7 +89,7 @@ export default function GroupDetail() {
     groupQuery.field('members', groupId)
     groupQuery
       .relation('_User')
-      .then((res) => {
+      .then((res: any) => {
         const formattedMemberData = (res.results as UserType[]).map(
           (member) => ({
             objectId: member.objectId,
@@ -115,7 +115,7 @@ export default function GroupDetail() {
     query.include('owner', userId)
     query
       .find()
-      .then((res) => {
+      .then((res: any) => {
         setOwnerData({
           objectId: res[0].owner.objectId,
           username: res[0].owner.username,
@@ -141,7 +141,7 @@ export default function GroupDetail() {
     billQuery.equalTo('group', '==', groupPoiID)
     billQuery
       .find()
-      .then((res) => {
+      .then((res: any) => {
         const formattedBillData = (res as BillType[]).map((bill: BillType) => ({
           objectId: bill.objectId,
           name: bill.name,

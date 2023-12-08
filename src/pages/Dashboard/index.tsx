@@ -27,7 +27,7 @@ Bmob.initialize(
 )
 
 export default function Dashboard() {
-  const current = Bmob.User.current()
+  const current = Bmob.User.current() as any
   const [form] = Form.useForm()
   const [settleUpForm] = Form.useForm()
   const [isBillLoading, setIsBillLoading] = useState(false)
@@ -54,6 +54,85 @@ export default function Dashboard() {
     }))
 
   const { Search } = Input
+
+  const fetchCurrentUserBillData = () => {
+    // fetch bill data by the current user as the owner
+    const billQuery = Bmob.Query('Bill')
+    setIsBillLoading(true)
+    billQuery.equalTo('owner', '==', current.objectId)
+    billQuery
+      .find()
+      .then((res: any) => {
+        setIsBillLoading(false)
+        const formattedBillData = (res as BillType[]).map((bill: BillType) => ({
+          objectId: bill.objectId,
+          name: bill.name,
+          currency: bill.currency,
+          payers: bill.payers,
+          category: bill.category,
+          description: bill.description,
+          owner: bill.owner,
+          group: bill.group,
+          price: bill.price,
+          status: bill.status,
+          createAt: bill.createAt,
+          updateAt: bill.updateAt,
+          completeAt: bill.completeAt,
+        }))
+        setUserBillData(formattedBillData)
+      })
+      .catch((err) => {
+        setIsBillLoading(false)
+        console.log(err)
+      })
+  }
+
+  const fetchGroupData = () => {
+    const groupQuery = Bmob.Query('Group')
+    groupQuery
+      .find()
+      .then((res: any) => {
+        const formattedGroupData = (res as GroupType[]).map(
+          (group: GroupType) => ({
+            objectId: group.objectId,
+            name: group.name,
+            description: group.description,
+            owner: group.owner,
+            members: group.members,
+            bills: group.bills,
+            createAt: group.createAt,
+            updateAt: group.updateAt,
+          }),
+        )
+        setGroupData(formattedGroupData)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const fetchMemberData = () => {
+    // fetch member data
+    const memberQuery = Bmob.Query('_User')
+    memberQuery
+      .find()
+      .then((res: any) => {
+        const formattedMemberData = (res as UserType[]).map(
+          (member: UserType) => ({
+            objectId: member.objectId,
+            username: member.username,
+            email: member.email,
+            phone: member.phone,
+            createAt: member.createAt,
+            updateAt: member.updateAt,
+          }),
+        )
+        setMemberData(formattedMemberData)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   useEffect(() => {
     // fetch bill data by the current user as the owner
@@ -96,7 +175,7 @@ export default function Dashboard() {
     billQuery.set('status', values.status)
     billQuery
       .save()
-      .then((res) => {
+      .then((res: any) => {
         message.success('Bill settled up successfully! at ' + res.updatedAt)
         fetchCurrentUserBillData()
         setIsSettleModalVisible(false)
@@ -113,13 +192,13 @@ export default function Dashboard() {
     // create bill
     const bill = Bmob.Query('Bill')
     const userPointer = Bmob.Pointer('_User')
-    const userPoiID = userPointer.set(current.objectId)
+    const userPoiID = userPointer.set(current.objectId) as unknown as string
 
     const groupPointer = Bmob.Pointer('_User')
-    const groupPoiID = groupPointer.set(values.group)
+    const groupPoiID = groupPointer.set(values.group) as unknown as string
 
     const relation = Bmob.Relation('_User')
-    const memberIDx = relation.add(values.payers)
+    const memberIDx = relation.add(values.payers) as unknown as string
 
     bill.set('name', values.name)
     bill.set('description', values.description)
@@ -131,91 +210,12 @@ export default function Dashboard() {
     bill.set('payers', memberIDx)
     bill
       .save()
-      .then((res) => {
+      .then((res: any) => {
         message.success('Bill created successfully! at ' + res.createdAt)
         fetchCurrentUserBillData()
       })
       .catch((err) => {
         message.error('Bill created failed! ' + err.message)
-        console.log(err)
-      })
-  }
-
-  const fetchGroupData = () => {
-    const groupQuery = Bmob.Query('Group')
-    groupQuery
-      .find()
-      .then((res) => {
-        const formattedGroupData = (res as GroupType[]).map(
-          (group: GroupType) => ({
-            objectId: group.objectId,
-            name: group.name,
-            description: group.description,
-            owner: group.owner,
-            members: group.members,
-            bills: group.bills,
-            createAt: group.createAt,
-            updateAt: group.updateAt,
-          }),
-        )
-        setGroupData(formattedGroupData)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  const fetchCurrentUserBillData = () => {
-    // fetch bill data by the current user as the owner
-    const billQuery = Bmob.Query('Bill')
-    setIsBillLoading(true)
-    billQuery.equalTo('owner', '==', current.objectId)
-    billQuery
-      .find()
-      .then((res) => {
-        setIsBillLoading(false)
-        const formattedBillData = (res as BillType[]).map((bill: BillType) => ({
-          objectId: bill.objectId,
-          name: bill.name,
-          currency: bill.currency,
-          payers: bill.payers,
-          category: bill.category,
-          description: bill.description,
-          owner: bill.owner,
-          group: bill.group,
-          price: bill.price,
-          status: bill.status,
-          createAt: bill.createAt,
-          updateAt: bill.updateAt,
-          completeAt: bill.completeAt,
-        }))
-        setUserBillData(formattedBillData)
-      })
-      .catch((err) => {
-        setIsBillLoading(false)
-        console.log(err)
-      })
-  }
-
-  const fetchMemberData = () => {
-    // fetch member data
-    const memberQuery = Bmob.Query('_User')
-    memberQuery
-      .find()
-      .then((res) => {
-        const formattedMemberData = (res as UserType[]).map(
-          (member: UserType) => ({
-            objectId: member.objectId,
-            username: member.username,
-            email: member.email,
-            phone: member.phone,
-            createAt: member.createAt,
-            updateAt: member.updateAt,
-          }),
-        )
-        setMemberData(formattedMemberData)
-      })
-      .catch((err) => {
         console.log(err)
       })
   }
