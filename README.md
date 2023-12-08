@@ -6,23 +6,21 @@ Effortlessly manage and split group expenses for trips, outings, and shared livi
 
 ## ✨ Features
 
-|Dashboard|Analysis|
-|:--:|:--:|
-|<img width="1492" alt="Screenshot 2023-12-06 at 10 55 14 AM" src="https://github.com/UCLA-CS130-23Fall/EasySplit/assets/15646062/a8e74768-1450-4b45-80b9-647acb36067e">|<img width="1503" alt="Screenshot 2023-12-06 at 10 55 23 AM" src="https://github.com/UCLA-CS130-23Fall/EasySplit/assets/15646062/7e3c1291-263d-405f-b7c0-f85fa57b03f6">|
+| Dashboard | Analysis |
+| :-: | :-: |
+| <img width="1492" alt="Screenshot 2023-12-06 at 10 55 14 AM" src="https://github.com/UCLA-CS130-23Fall/EasySplit/assets/15646062/a8e74768-1450-4b45-80b9-647acb36067e"> | <img width="1503" alt="Screenshot 2023-12-06 at 10 55 23 AM" src="https://github.com/UCLA-CS130-23Fall/EasySplit/assets/15646062/7e3c1291-263d-405f-b7c0-f85fa57b03f6"> |
 
 - 🛠 User and Group Management
-    - Unified User Profiles
-    - Dynamic Group Creation
-    - Personalized Notifications
+  - Unified User Profiles
+  - Dynamic Group Creation
+  - Personalized Notifications
 - ❤️ Bill Management
-    - Versatile Bill Splitting
-    - Multiple-currency Support
-    - LLM-Based Spending Suggestion 
+  - Versatile Bill Splitting
+  - Multiple-currency Support
+  - LLM-Based Spending Suggestion
 - 💡 Cost Visualization and Analysis
-    - Analytical Reports
-    - Exportable Data
-
-
+  - Analytical Reports
+  - Exportable Data
 
 ## Quick Start
 
@@ -40,12 +38,12 @@ VITE_BMOB_API_KEY = Abc123456@
 Install `node.js` and make sure you have `npm` command. Run the following commands:
 
 ```
-npm install 
+npm install
 ```
 
 ### 3. Start the application
 
-Run 
+Run
 
 ```bash
 npm start
