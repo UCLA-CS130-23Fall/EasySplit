@@ -84,7 +84,7 @@ export default function Group() {
 
     group.save().then(
       (res: any) => {
-        setGroupData((prev : any) => [...prev, newGroup])
+        setGroupData((prev: any) => [...prev, newGroup])
         message.success('Group created successfully! at ' + res.createdAt)
       },
       (err) => {
@@ -114,7 +114,7 @@ export default function Group() {
     setIsGroupLoading(true)
     groupQuery
       .find()
-      .then((res : any) => {
+      .then((res: any) => {
         setIsGroupLoading(false)
         const formattedGroupData = (res as GroupType[]).map(
           (group: GroupType) => ({
@@ -138,7 +138,7 @@ export default function Group() {
     const memberQuery = Bmob.Query('_User')
     memberQuery
       .find()
-      .then((res : any) => {
+      .then((res: any) => {
         const formattedMemberData = (res as UserType[]).map(
           (member: UserType) => ({
             objectId: member.objectId,

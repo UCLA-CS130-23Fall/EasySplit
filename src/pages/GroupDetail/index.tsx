@@ -37,7 +37,7 @@ export default function GroupDetail() {
   useEffect(() => {
     const groupQuery = Bmob.Query('Group')
     setIsGroupLoading(true)
-    groupQuery.get(groupId).then((group : any) => {
+    groupQuery.get(groupId).then((group: any) => {
       setIsGroupLoading(false)
       setGroupData({
         objectId: group.objectId,
@@ -70,7 +70,7 @@ export default function GroupDetail() {
     const relID = relation.remove([item.objectId])
     groupQuery
       .get(groupId)
-      .then((res : any) => {
+      .then((res: any) => {
         res.set('members', relID)
         res.save()
         fetchGroupMemberData()
@@ -89,7 +89,7 @@ export default function GroupDetail() {
     groupQuery.field('members', groupId)
     groupQuery
       .relation('_User')
-      .then((res : any) => {
+      .then((res: any) => {
         const formattedMemberData = (res.results as UserType[]).map(
           (member) => ({
             objectId: member.objectId,
@@ -115,7 +115,7 @@ export default function GroupDetail() {
     query.include('owner', userId)
     query
       .find()
-      .then((res : any) => {
+      .then((res: any) => {
         setOwnerData({
           objectId: res[0].owner.objectId,
           username: res[0].owner.username,
@@ -141,7 +141,7 @@ export default function GroupDetail() {
     billQuery.equalTo('group', '==', groupPoiID)
     billQuery
       .find()
-      .then((res : any) => {
+      .then((res: any) => {
         const formattedBillData = (res as BillType[]).map((bill: BillType) => ({
           objectId: bill.objectId,
           name: bill.name,
