@@ -65,6 +65,7 @@ export default defineConfig({
       // https://github.com/vitejs/vite/issues/2185#issuecomment-784637827
       { find: /^~/, replacement: '' },
     ],
+    preserveSymlinks: true,
   },
   css: {
     modules: {
