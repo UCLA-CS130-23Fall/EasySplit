@@ -19,10 +19,16 @@ import {
 import { COLORS } from '@/data/color'
 
 import Bmob from 'hydrogen-js-sdk'
-Bmob.initialize(
-  import.meta.env.VITE_BMOB_SECRET_KEY,
-  import.meta.env.VITE_BMOB_API_KEY,
-)
+let secretKey, apiKey
+if (process.env.NODE_ENV === 'test') {
+  secretKey = 'mock_secret_key'
+  apiKey = 'mock_api_key'
+} else {
+  secretKey = import.meta.env.VITE_BMOB_SECRET_KEY
+  apiKey = import.meta.env.VITE_BMOB_API_KEY
+}
+
+Bmob.initialize(secretKey, apiKey)
 
 function Finance() {
   return (
