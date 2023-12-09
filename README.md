@@ -26,16 +26,16 @@ Effortlessly manage and split group expenses for trips, outings, and shared livi
 
 ### 1. Create the BaaS API environment
 
-Create an `.env` file under the root directory and add the following line:
+Navigate to the root directory and create an `.env` file. Add the following lines:
 
 ```
 VITE_BMOB_SECRET_KEY = d44c1852ef129122
 VITE_BMOB_API_KEY = Abc123456@
 ```
 
-### 2. Install Node.js and equired packages
+### 2. Install Node.js and required packages
 
-Install `node.js` and make sure you have `npm` command. Run the following commands:
+Install `node.js` and make sure you have the `npm` command. Run the following command:
 
 ```
 npm install
@@ -43,7 +43,7 @@ npm install
 
 ### 3. Start the application
 
-Run
+Run the following command:
 
 ```bash
 npm start
